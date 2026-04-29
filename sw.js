@@ -1,4 +1,4 @@
-const CACHE_NAME = 'ia-salud-v6';
+const CACHE_NAME = 'ia-salud-v7';
 const ASSETS = ['./', './index.html', './manifest.json'];
 
 self.addEventListener('install', e => {
