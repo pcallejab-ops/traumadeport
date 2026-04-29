@@ -905,6 +905,8 @@ REGLAS ESTRICTAS:
         } catch (err) {
             typingEl.remove();
             addMessage('ai', `❌ **Error:** ${err.message}\n\nVerifica tu API Key en ⚙️ Ajustes o inténtalo de nuevo.`);
+            // Si hay error, quitamos el mensaje del usuario del historial para no corromper el orden
+            STATE.history.pop();
         }
 
         STATE.isLoading = false;
@@ -913,21 +915,12 @@ REGLAS ESTRICTAS:
 
     async function callGemini(userMsg) {
         const systemPrompt = getSystemPrompt();
-        const contents = [
-            { role: 'user', parts: [{ text: systemPrompt + '\n\n---\nCONSULTA DEL USUARIO:\n' + (STATE.history.length <= 1 ? userMsg : '') }] },
-            { role: 'model', parts: [{ text: 'Entendido. Soy IA Salud, especialista en ' + STATE.currentSpec.name + '. ¿En qué puedo ayudarte?' }] },
-            ...STATE.history.slice(STATE.history.length <= 1 ? 0 : 0)
-        ];
 
-        // Simplify: use conversation history properly
         const body = {
-            contents: STATE.history.length === 1
-                ? [{ role: 'user', parts: [{ text: systemPrompt + '\n\n---\nCONSULTA:\n' + userMsg }] }]
-                : [
-                    { role: 'user', parts: [{ text: systemPrompt }] },
-                    { role: 'model', parts: [{ text: 'Entendido. Estoy listo para ayudar como especialista en ' + STATE.currentSpec.name + '.' }] },
-                    ...STATE.history
-                ],
+            system_instruction: {
+                parts: [{ text: systemPrompt }]
+            },
+            contents: STATE.history,
             generationConfig: {
                 temperature: 0.7,
                 topP: 0.9,
