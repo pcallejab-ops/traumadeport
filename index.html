@@ -521,9 +521,9 @@
                 <div class="settings-label">Modelo IA</div>
                 <div class="settings-card">
                     <select id="model-select">
-                        <option value="gemini-2.0-flash">Gemini 2.0 Flash (rápido)</option>
-                        <option value="gemini-2.5-flash">Gemini 2.5 Flash (equilibrado)</option>
-                        <option value="gemini-2.5-pro">Gemini 2.5 Pro (avanzado)</option>
+                        <option value="gemini-1.5-flash">Gemini 1.5 Flash (recomendado, más rápido)</option>
+                        <option value="gemini-2.0-flash">Gemini 2.0 Flash (última versión)</option>
+                        <option value="gemini-1.5-pro">Gemini 1.5 Pro (razonamiento avanzado)</option>
                     </select>
                 </div>
             </div>
@@ -710,7 +710,7 @@
     // ===== STATE =====
     const STATE = {
         apiKey: localStorage.getItem('ia_salud_apikey') || '',
-        model: localStorage.getItem('ia_salud_model') || 'gemini-2.0-flash',
+        model: localStorage.getItem('ia_salud_model') || 'gemini-1.5-flash',
         theme: localStorage.getItem('ia_salud_theme') || 'dark',
         mode: localStorage.getItem('ia_salud_mode') || 'patient',
         currentSpec: null,
